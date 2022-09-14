@@ -20,6 +20,12 @@ model.compile(optimizer='adam',
               metrics=['accuracy'])
 model.fit(x_train, y_train, epochs=5)
 
-print(model.evaluate(x_test,y_test))
+# print(model.evaluate(x_test,y_test))
+
+probability_model = tf.keras.Sequential([
+  model,
+  tf.keras.layers.Softmax()
+])
 
 model.save('C:/Users/marcus/Desktop/Deep Learning/Digit-Recognition-DL/digit_recognition_model')
+probability_model.save('C:/Users/marcus/Desktop/Deep Learning/Digit-Recognition-DL/digit_recognition_model_probability')

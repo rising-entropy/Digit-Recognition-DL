@@ -1,3 +1,4 @@
+from email.mime import image
 from statistics import mode
 from fastapi import FastAPI
 from pydantic import BaseModel
@@ -7,6 +8,15 @@ import uuid
 import os
 import numpy as np
 import cv2
+import PIL
+
+def input_prepare(img):
+    img = np.asarray(img)             
+    img = cv2.resize(img, (28, 28 ))   
+    img = cv2.bitwise_not(img)        
+    img = img / 255.0
+    img = np.array([img])
+    return img 
 
 app = FastAPI()
 
@@ -25,25 +35,16 @@ async def recognizeDigit(imagePayload: ImagePayload):
     imgData = base64.b64decode(imagePayload.image)
     with open(theImageName, "wb") as fh:
         fh.write(imgData)
-    image_loaded = tf.keras.preprocessing.image.load_img(theImageName)
-    image_array  = tf.keras.preprocessing.image.img_to_array(image_loaded)
-    image_array = tf.image.rgb_to_grayscale(image_array)
-    image_array = tf.image.resize(
-        image_array,
-        (28,28),
-    )
-    image_array /= 255.0
-    os.remove(theImageName)
-
-    print(image_array)
-
+    img = cv2.imread(theImageName)
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) # gray scaling 
+    img = input_prepare(img)
     
-    # Load the Model
-    model = tf.keras.models.load_model("digit_recognition_model")
-
-    # Predict the outcome
-    prediction = model.predict(image_array, batch_size=1)
-    print(prediction)
-
-
-    return {"item_name": "image_array"}
+    os.remove(theImageName)
+    
+    model = tf.keras.models.load_model("digit_recognition_model_probability")
+    pred = model.predict(img)
+    thePredList = pred.tolist()[0]
+    print(thePredList)
+    for i in range(len(thePredList)):
+        thePredList[i] = thePredList[i]*100
+    return {"prediction": thePredList}
