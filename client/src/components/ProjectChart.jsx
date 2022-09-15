@@ -47,8 +47,6 @@ export default function ProjectChart(props) {
         ],
       };
 
-
-
   return <div style={{margin: '1.2rem auto'}}>
     <Bar options={options} data={data} />
     </div>;
