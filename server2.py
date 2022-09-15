@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-import tensorflow as tf
+import uvicorn
+import pickle
+# import tensorflow as tf
 import base64
 import uuid
 import os
@@ -55,9 +57,14 @@ async def recognizeDigit(imagePayload: ImagePayload):
     os.remove(theImageName)
     os.remove(theImageName.replace(".jpeg", ".png"))
     
-    model = tf.keras.models.load_model("digit_recognition_model_probability")
+    # model = tf.keras.models.load_model("digit_recognition_model_probability")
+    model = pickle.load(open('C:/Users/marcus/Desktop/Deep Learning/Digit-Recognition-DL/digit_recognition_model_probability.pkl', 'rb'))
     pred = model.predict(img)
     thePredList = pred.tolist()[0]
     for i in range(len(thePredList)):
         thePredList[i] = thePredList[i]*100
     return {"prediction": thePredList}
+
+
+if __name__ == '__main__':
+    uvicorn.run(app, port=5000)

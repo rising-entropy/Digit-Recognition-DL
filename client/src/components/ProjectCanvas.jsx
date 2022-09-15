@@ -33,7 +33,7 @@ export default function ProjectCanvas() {
         console.log(base64.split("data:image/png;base64,")[1])
 
         setImageBase64(base64);
-        axios.post("http://localhost:5010/recognize-digit",{
+        axios.post("https://digit-recognition-backend.devangk.dev/recognize-digit",{
             image: base64.split("data:image/png;base64,")[1]
         }, {
             headers: {
