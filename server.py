@@ -8,7 +8,7 @@ import uuid
 import os
 import numpy as np
 import cv2
-import PIL
+from PIL import Image
 from fastapi.middleware.cors import CORSMiddleware
 
 
@@ -45,6 +45,11 @@ async def recognizeDigit(imagePayload: ImagePayload):
     imgData = base64.b64decode(imagePayload.image)
     with open(theImageName, "wb") as fh:
         fh.write(imgData)
+    image = Image.open(theImageName)
+    new_image = Image.new("RGBA", image.size, "WHITE") # Create a white rgba background
+    new_image.paste(image, (0, 0), image)              # Paste the image on the background. Go to the links given below for details.
+    theImageName = theImageName.replace(".png", ".jpeg")
+    new_image.convert('RGB').save(theImageName, "JPEG")  # Save as JPEG
     img = cv2.imread(theImageName)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) # gray scaling 
     img = input_prepare(img)
