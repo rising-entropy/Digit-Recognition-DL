@@ -9,6 +9,8 @@ import os
 import numpy as np
 import cv2
 import PIL
+from fastapi.middleware.cors import CORSMiddleware
+
 
 def input_prepare(img):
     img = np.asarray(img)             
@@ -19,6 +21,14 @@ def input_prepare(img):
     return img 
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class ImagePayload(BaseModel):
     image: str
@@ -44,7 +54,6 @@ async def recognizeDigit(imagePayload: ImagePayload):
     model = tf.keras.models.load_model("digit_recognition_model_probability")
     pred = model.predict(img)
     thePredList = pred.tolist()[0]
-    print(thePredList)
     for i in range(len(thePredList)):
         thePredList[i] = thePredList[i]*100
     return {"prediction": thePredList}

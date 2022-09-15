@@ -1,0 +1,32 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #F6E1B8;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.roboto {
+  font-family: 'Roboto', sans-serif !important;
+}
+
+.alegreyaSans{
+  font-family: 'Alegreya Sans', sans-serif !important;
+}
+
+.exo{
+  font-family: 'Exo', sans-serif !important;
+}
+
+.montserrat{
+  font-family: 'Montserrat', sans-serif !important;
+}
+
+
