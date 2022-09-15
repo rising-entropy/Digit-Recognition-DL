@@ -55,6 +55,7 @@ async def recognizeDigit(imagePayload: ImagePayload):
     img = input_prepare(img)
     
     os.remove(theImageName)
+    os.remove(theImageName.replace(".jpeg", ".png"))
     
     model = tf.keras.models.load_model("digit_recognition_model_probability")
     pred = model.predict(img)
