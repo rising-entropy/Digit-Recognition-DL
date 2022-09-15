@@ -31,7 +31,6 @@ export default function ProjectCanvas() {
         }
 
         console.log(base64.split("data:image/png;base64,")[1])
-        console.log("namo")
 
         setImageBase64(base64);
         axios.post("http://localhost:5010/recognize-digit",{
@@ -73,7 +72,7 @@ export default function ProjectCanvas() {
             <div className="col-lg-4 col-md-6 col-sm-12">
                 <div className="container container-fluid">
                     <div className="row">
-                        <CanvasDraw ref={canvasDraw} backgroundColor='white' brushColor='black' hideGrid={true} brushRadius={20} style={{boxShadow:"0 13px 27px -5px rgba(50, 50, 93, 0.25), 0 8px 16px -8px rgba(0, 0, 0, 0.3)"}} />
+                        <CanvasDraw ref={canvasDraw} backgroundColor='white' brushColor='black' hideGrid={true} brushRadius={15} style={{boxShadow:"0 13px 27px -5px rgba(50, 50, 93, 0.25), 0 8px 16px -8px rgba(0, 0, 0, 0.3)"}} />
                     </div>
                     <div className="row text-center" style={{margin: '2rem auto'}}>
                         <div className="col-4 text-center">
